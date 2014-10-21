@@ -1,0 +1,8 @@
+*.pyc
+/calendar/settings*.py
+/media
+/static
+backup-file.sql
+db.sqlite3
+*~
+
