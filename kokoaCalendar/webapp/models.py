@@ -14,24 +14,34 @@ class Materia(models.Model):
 	codigo = models.CharField(max_length=10, blank="true", null="true")
 	paralelos = models.CharField(max_length=100, blank="true", null="true")
 
+	def __unicode__(self):
+		return unicode(self.nombre)
+
 
 # wsMateriasDisponibles
 class MateriaDisponible(models.Model):
 	username = models.ForeignKey(User)
 	materia = models.ManyToManyField(Materia)
 
+	def __unicode__(self):
+		return unicode(self.materia)
+
 class Curso(models.Model):
-	codigo_materia = models.CharField(max_length=10)
+	materia = models.ForeignKey(Materia)
 	paralelo = models.PositiveSmallIntegerField()
 	horario_clases = models.CharField(max_length=50)
 	horario_examenes = models.CharField(max_length=50)
 	aula = models.CharField(max_length=11)
 
+	def __unicode__(self):
+		return unicode(self.materia)
+
 class Plan(models.Model):
 	username = models.ForeignKey(User)
 	curso = models.ManyToManyField(Curso)
+
 	def __unicode__(self):
-		return str(self.username)
+		return unicode(self.username)
 
 
 # wsInfoEstudianteGeneral
@@ -40,11 +50,9 @@ class Estudiante(models.Model):
 	matricula = models.CharField(max_length=11, blank="true", null="true")
 	carrera = models.CharField(max_length=50, blank="true", null="true")
 	promedio = models.CharField(max_length=5, blank="true", null="true")
-	planA = models.ForeignKey(Plan, blank="true", null="true", related_name="Plan A")
-	planB = models.ForeignKey(Plan, blank="true", null="true" , related_name="Plan B")
-	planC = models.ForeignKey(Plan, blank="true", null="true", related_name="Plan C")
+	plan = models.ForeignKey(Plan, blank="true", null="true", related_name="Plan")
 	materiaDisponibles = models.ManyToManyField(MateriaDisponible)
 	
 	def __unicode__(self):
-		return str(self.username)
+		return unicode(self.username)
 
