@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script>
+      dias = {'lunes','martes','miercoles','jueves','viernes','sabado'};
+      
+      $(document).ready(function(){
+        $('#materias span').click(function(){
+          dia = $(this).data('dia');
+          horario1 = $(this).data('horario');
+          $('#seleccionadas').append($(this).data('materia'));
+          $(this).hide(2000);
+        });
+      });
+
+      actualizar = function(dia, hora){
+        //Validar el choque de materias y presentar advertencia 
+        //Comparar el día de la materia con los días que ya están activados o elegidos en el momento
+           //Si el dia no está activado o elegido mostrar (Show Div) con su columna de horarios
+        //Verificar horarios de todas las materias escogidas y obtener nuevos horarios
+        for(dia in dias){
+          if(dia === dia){
+
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row"> 
+        <div class="col-md-6">
+          <div id="materias">
+            {% for materia in materias %}
+             <span data-materia ="{{ materia }}">{{ materia }}</span>
+             <!--dia-->
+             <!--hora empieza y termina (Pueden haber varias y diferentes) -->
+             <br/>     
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="seleccionadas">
+             <div id="dias"></div>
+             <div id="materia_escogidas"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="col-md-6">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
