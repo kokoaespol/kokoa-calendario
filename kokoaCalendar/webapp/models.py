@@ -8,6 +8,13 @@ Materias Disponibles (ForeignKey[Estudiante], codigo, nombre, paralelos[String])
 Curso (codigo_materia, paralelo, horario_clases, horario_examenes, aula)
 
 '''
+class Usuario(models.Model):
+	username = models.TextField(max_length=15)
+	password = models.TextField(max_length=15)
+
+	def __unicode__(self):
+		return unicode(self.username)
+
 class Materia(models.Model):
 	creditos = models.PositiveSmallIntegerField()
 	nombre = models.CharField(max_length=20, blank=True, null=True, unique=True)
@@ -55,4 +62,5 @@ class Estudiante(models.Model):
 	
 	def __unicode__(self):
 		return unicode(self.username)
+
 
