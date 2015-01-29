@@ -8,7 +8,6 @@ import json
 
 # Create your views here.
 
-
 def login1(request):
     try:
         user = request.POST['username'].strip()
@@ -55,5 +54,16 @@ def login1(request):
         #else 
         #return HttpBadRequest('Valio')
         #return HttpResponseBadRequest('Error autenticacion')"""
+
+def horario(request):
+    #user = request.user
+    materias_disponibles =['Calculo','Historia','Lenguaje'] 
+    horarios = []
+    context = {
+      'materias':materias_disponibles
+    }
+    template = 'web/horario.html'
+    return render(request, template, context)
+
 
 
