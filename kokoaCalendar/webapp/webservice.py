@@ -2,10 +2,10 @@ from suds.xsd.doctor import ImportDoctor, Import
 from suds.client import Client
 import unicodedata
 class Horas():
-  dia = ""
-  inicio = ""
-  final = ""
-  curso = ""
+  dia = ''
+  inicio = ''
+  final = ''
+  curso = ''
   def __init__(self, dia, inicio, final, curso):
     self.dia = dia 
     self.inicio = inicio
@@ -13,26 +13,36 @@ class Horas():
     self.curso = curso 
 
 class Paralelo_web():
-  numero = ''
+  numero = 1
   horarios = []
   def __init__(self, numero):
     self.numero = numero
+    self.horarios = []
 
   def getHorarios(self, codigo):
     servicio = Servicio()
     print 'codigo'+ codigo 
+    print self.numero
     client = Client(servicio.url, doctor = servicio.doctor)
     resultado = client.service.wsHorarioClases(codigo, self.numero)
+    print len(resultado[1])
+    if len(resultado[1])==0:
+      print 'vacio'
+      return 
     lista = []
+    print resultado
+    print resultado[1]
+    print resultado[1][0]
+    print resultado[1][0][0]
     for horario in resultado[1][0][0]:
       dia = horario['NOMBREDIA']
+      print dia
       inicio = horario['HORAINICIO']
       fin = horario['HORAFIN']
       curso = horario['AULA']
       print dia + inicio + fin + curso
       horario_ = Horas(dia,inicio,fin,curso)
-      lista.append(horario_)
-    self.horarios =  lista
+      self.horarios.append(horario_)
   
 class Materia_web():
   nombre =''

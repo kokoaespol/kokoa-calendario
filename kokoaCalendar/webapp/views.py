@@ -72,19 +72,21 @@ def horario(request):
           print materia.nombre
           nombre = materia.nombre
           print materia.codigo
-          materia_ = Materia(creditos = materia.creditos,nombre =nombre, codigo = materia.codigo)
-          materia_.save()
-          materias_list.append(materia_)
+          existe = Materia.objects.filter(codigo=materia.codigo)
+          if len(existe)==0:            
+            materia_ = Materia(creditos = materia.creditos,nombre =nombre, codigo = materia.codigo)
+            materia_.save()
+            materias_list.append(materia_)
 #materiadisp_.materia.add(materia_)
-          for paralelo in materia.paralelos:
-             paralelo.getHorarios(materia.codigo)
-             print 'paralleo'
-             paralelo_ = Paralelo(numero = paralelo.numero, materia=materia_)
-             paralelo_.save()
-             print 'paralelos save'
-             for hora in paralelo.horarios:
-                horario_ = Horario(dia=hora.dia,inicio=hora.inicio,fin=hora.final,curso=hora.curso, paralelo=paralelo_)
-                horario_.save()
+            for paralelo in materia.paralelos:
+               paralelo.getHorarios(materia.codigo)
+               print 'paralleo'
+               paralelo_ = Paralelo(numero = paralelo.numero, materia=materia_)
+               paralelo_.save()
+               print 'paralelos save'
+               for hora in paralelo.horarios:
+                  horario_ = Horario(dia=hora.dia,inicio=hora.inicio,fin=hora.final,curso=hora.curso, paralelo=paralelo_)
+                  horario_.save()
        for m in materias_list:
           materiadisp_.materia.add(m)
        materiadisp_.save()      
