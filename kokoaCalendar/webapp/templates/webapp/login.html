@@ -6,50 +6,52 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Login</title>
-
+		<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     	<link href="/static/css/bootstrap.css" rel="stylesheet">
 	</head>
 
 	<body>
-	<div class="container">
-		<div class = "row-fluid">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<div class="container-fluid">
-					<div class="row">
-					
-						<center><h1>Académico</h1></center>
-
-						<div class="col-md-5">
-							<center>
-								<img src="{{MEDIA_URL}}kokoanew.png" class="img-responsive" alt="Responsive image">
-							</center>
-						</div>
-					
-						<div class= "col-md-7">
-						  <div class="login_form" style="margin-top:70px;">
-							<form name="form" method= "POST">
-								<!--{% csrf_token %} -->
-								<div class="input-group input-group-lg">
-									<span class="input-group-addon glyphicon glyphicon-user"></span>
-									<input type="text" class="form-control" name="username" placeholder="Usuario">
+		<div class="container">
+			<div class = "row-fluid">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<div class="container-fluid">
+						<div class="row">
+							<center><h1>Académico</h1></center>
+								<div class="col-md-5">
+									<center>
+										<img src="{{MEDIA_URL}}kokoanew.png" class="img-responsive" alt="Responsive image">
+									</center>
 								</div>
 					
-								<div class="input-group input-group-lg">
-									<span class="input-group-addon glyphicon glyphicon-lock"></span>
-									<input type="password" class="form-control" placeholder="Contraseña" name="password">
-								</div>
+								<div class= "col-md-7">
+						  		<div class="login_form" style="margin-top:70px;">
+										<form name="form" method= "POST">
+											{% csrf_token %}
+											{% if validar %}
+												<p><font color="red">Error en validacion</font></p>
+											{%endif%}
+											<div class="input-group input-group-lg">
+												<span class="input-group-addon glyphicon glyphicon-user"></span>
+												<input type="text" class="form-control" name="username" placeholder="Usuario">
+											</div>
+					
+											<div class="input-group input-group-lg">
+												<span class="input-group-addon glyphicon glyphicon-lock"></span>
+												<input type="password" class="form-control" placeholder="Contraseña" name="password">
+											</div>
 
-								<br>
-								<center><button type="submit" class="btn btn-info btn-lg">Ingresar</button></center>
-							</form>
-						  </div>
+											<br>
+											<center><button type="submit" class="btn btn-info btn-lg">Ingresar</button></center>
+										</form>
+						  		</div>
+								</div>
+						
 						</div>
-					</div>
+		   	 	</div>
+					<div class="col-md-2"></div>
 				</div>
-		   	  </div>
-			<div class="col-md-2"></div>
-		  </div>
-	   </div>
-  	</body>
+			</div>
+		</div>
+	</body>
 </html>

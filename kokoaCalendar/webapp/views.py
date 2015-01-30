@@ -1,60 +1,43 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.http import HttpResponseForbidden, HttpResponseBadRequest, HttpResponseNotFound
 from suds.xsd.doctor import ImportDoctor, Import
 from suds.client import Client
 import json
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+ 
 #from apprest.models import *
 
 # Create your views here.
 
-def login1(request):
-    try:
-        user = request.POST['username'].strip()
-        pwd = request.POST['password'].strip()
-        print 'Holi' + pwd
-        return HttpResponse(str(pwd))
-    except:
-        return HttpResponseBadRequest('Error parametros')
-    """
-	from django.contrib.auth import authenticate, login
-    auth = authenticate(username = user , password = pwd)
-    if auth is not None:
-        login(request, auth)
-        response = {'username':auth.pk}
-
-        #return HttpResponse(json.dumps(response))
-        return HttpResponse(auth.pk,status=202)
-    else:
-
-        url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL'
-        imp = Import('http://www.w3.org/2001/XMLSchema')
-        imp.filter.add('http://tempuri.org/')
-        doctor = ImportDoctor(imp)
-        client = Client(url, doctor=doctor)
-        auth = client.service.autenticacion(user,pwd)
-
-        if auth == True:
-            auth = User.objects.create_user(username=user, password=pwd)
-            auth.save()
-            auth = authenticate(username = user , password = pwd)
-            #auth = User.objects.filter(username = user)
-            login(request,auth) 
-            return HttpResponse(auth.pk,status=202)
+def ingresar(request):
+    if request.method == 'POST':
+        usuario = request.POST['username']
+        clave = request.POST['password']
+        autenticacion= authenticate(username = usuario , password = clave)
+     	if autenticacion is not None:
+            return redirect('webapp.views.horario')
         else:
-            #self.username = None
-            #self.password = None
-            return HttpResponseForbidden('Autenticacion Fallida')
+            
+            url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL'
+            imp = Import('http://www.w3.org/2001/XMLSchema')
+            imp.filter.add('http://tempuri.org/')
+            doctor = ImportDoctor(imp)
+            client = Client(url, doctor=doctor)
+            auth = client.service.autenticacion(usuario, clave)
 
+            if auth == True:
+                auth = User.objects.create_user(username=usuario, password=clave)
+                auth.save()
+                auth = authenticate(username = usuario , password = clave)
+                login(request,auth) 
+                return redirect('webapp.views.horario')
+            else:
+               return HttpResponseForbidden('Autenticacion Fallida')
 
-        #erficiar usuario en web servic
-        #if el usuario de arriba existe, save
-        #user = User(userna,pawd) .save
-        #login(request, user)a
-        #else 
-        #return HttpBadRequest('Valio')
-        #return HttpResponseBadRequest('Error autenticacion')"""
-
+    return render(request,"webapp/login.html")
+		
 def horario(request):
     #user = request.user
     materias_disponibles =['Calculo','Historia','Lenguaje'] 

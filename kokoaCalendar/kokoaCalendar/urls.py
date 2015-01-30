@@ -9,10 +9,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-	url(r'^$', 'django.contrib.auth.views.login', {'template_name': 'webapp/login.html'}, name='login'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^horario/', 'webapp.views.horario')
-	url(r'^home/$', views.login1),
+    url(r'^$', 'webapp.views.ingresar'),
+	url(r'^admin/', include(admin.site.urls)),
+     url(r'^horario/', 'webapp.views.horario')
+	
 ) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 
