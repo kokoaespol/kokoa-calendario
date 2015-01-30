@@ -9,23 +9,38 @@ Curso (codigo_materia, paralelo, horario_clases, horario_examenes, aula)
 
 '''
 class Usuario(models.Model):
-	username = models.TextField(max_length=15)
-	password = models.TextField(max_length=15)
+  user = models.ForeignKey(User)
+  matricula = models.CharField(max_length=10)
 
-	def __unicode__(self):
-		return unicode(self.username)
+  def __unicode__(self):
+		return unicode(self.matricula)
 
 class Materia(models.Model):
-	creditos = models.PositiveSmallIntegerField()
-	nombre = models.CharField(max_length=20, blank=True, null=True, unique=True)
-	codigo = models.CharField(max_length=10, blank=True, null=True, unique=True)
-	paralelos = models.CharField(max_length=100, blank=True, null=True)
+    creditos = models.PositiveSmallIntegerField()
+    nombre = models.CharField(max_length=20, blank=True, null=True, unique=True)
+    codigo = models.CharField(max_length=10, blank=True, null=True, unique=True)
+    def __unicode__(self):
+        return unicode(self.nombre)
+ 
+class Paralelo(models.Model):
+    numero = models.PositiveSmallIntegerField()
+    materia = models.ForeignKey(Materia, related_name='paralelo')
 
-	def __unicode__(self):
-		return unicode(self.nombre)
+    def __unicode__(self):
+        return unicode(self.numero)
+
+class Horario(models.Model):
+    dia = models.CharField(max_length=10)
+    inicio = models.CharField(max_length=10)
+    fin = models.CharField(max_length=10)
+    curso = models.CharField(max_length=10)
+    paralelo = models.ForeignKey(Paralelo, related_name ='horario') 
+
+    def __unicode__(self):
+        return unicode(self.dia + self.curso)
 
 
-# wsMateriasDisponibles
+#wsMateriasDisponibles
 class MateriaDisponible(models.Model):
 	username = models.ForeignKey(User)
 	materia = models.ManyToManyField(Materia)

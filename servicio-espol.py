@@ -198,7 +198,7 @@ def consulta_Materias_Estudiante():
 							
 							codigoAulaClase = codigoAulaClase.encode('utf-8')
 							a = a + diaClase + ':' + horaInicioClase + '-' + horaFinalClase + ','
-							a1 = a1 + diaClase +  ':' + codigoAulaClase + '-' + bloqueAulaClase + '-' + campusClase + '-' 
+							a1 = a1 + diaClase +  ':' + codigoAulaClase + '-' + bloqueAulaClase + '-' + campusClase + '-' \
 									+ bloqueCampusClase + '-' + idAulaClase + ',' 
 							#a = [codigoAulaClase,bloqueAulaClase,campusClase,bloqueCampusClase,idAulaClase,horaInicioClase,horaFinalClase,diaClase]
 							#tmpClase.append(a)

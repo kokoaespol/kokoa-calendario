@@ -35,6 +35,12 @@ for line in archivo.readlines():
        estudiantes.append(estu)
 archivo.close()
 i=0
+matricula =  client.service.wsBuscarMateria('FIEC04705',1)
+print matricula        
+paralelo=matricula.diffgram.NewDataSet.MATERIA.PARALELO
+matricula=client.service.wsHorarioClases('FIEC04705',paralelo)
+print matricula
+"""
 for estudiante in estudiantes:
      if estudiante.matricula.__len__>5:
         try:
@@ -61,4 +67,4 @@ final.close()
 # SEXO
 #materiasDisponibles =  client.service.wsMateriasDisponibles(matricula)
 #horarioClases = client.service.wsHorarioClases(codigoMateria, paralelo)
-#horarioExamenes = client.service.wsHorarioClases(codigoMateria, paralelo)
+#horarioExamenes = client.service.wsHorarioClases(codigoMateria, paralelo)"""
