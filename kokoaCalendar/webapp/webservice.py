@@ -21,29 +21,32 @@ class Paralelo_web():
 
   def getHorarios(self, codigo):
     servicio = Servicio()
-    print 'codigo'+ codigo 
-    print self.numero
+    #print 'codigo'+ codigo 
+    #print self.numero
     client = Client(servicio.url, doctor = servicio.doctor)
     resultado = client.service.wsHorarioClases(codigo, self.numero)
-    print len(resultado[1])
+    #print len(resultado[1])
     if len(resultado[1])==0:
-      print 'vacio'
+      #print 'vacio'
       return 
     lista = []
-    print resultado
-    print resultado[1]
-    print resultado[1][0]
-    print resultado[1][0][0]
+    #print resultado
+    #print resultado[1]
+    #print resultado[1][0]
+    #print resultado[1][0][0]
     for horario in resultado[1][0][0]:
-      dia = horario['NOMBREDIA']
-      print dia
-      inicio = horario['HORAINICIO']
-      fin = horario['HORAFIN']
-      curso = horario['AULA']
-      print dia + inicio + fin + curso
-      horario_ = Horas(dia,inicio,fin,curso)
-      self.horarios.append(horario_)
-  
+      try: 
+        dia = horario['NOMBREDIA']
+        print dia
+        inicio = horario['HORAINICIO']
+        fin = horario['HORAFIN']
+        curso = horario['AULA']
+        print dia + inicio + fin + curso
+        horario_ = Horas(dia,inicio,fin,curso)
+        self.horarios.append(horario_)
+      except Exception:
+        print "Error"
+
 class Materia_web():
   nombre =''
   tipo = ''
@@ -62,12 +65,18 @@ class Materia_web():
     self.ultimo_cambio = ultimo
 
   def obtenerParalelos(self):
+    #print "holl"
     servicio = Servicio()
     client = Client(servicio.url, doctor = servicio.doctor)
     resultado = client.service.wsBuscarMateria(self.codigo, '1')
+    print resultado
     for paralelo in resultado[1][0][0]:
-      paralelo_ = Paralelo_web(paralelo['PARALELO'])
-      self.paralelos.append(paralelo_)
+      #print "hoiasdk"
+      try:
+        paralelo_ = Paralelo_web(paralelo['PARALELO'])
+        self.paralelos.append(paralelo_)
+      except Exception:
+        print "Error"
 
 class Servicio():
   url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL'
@@ -98,8 +107,4 @@ class Servicio():
        materia_ = Materia_web(materia['NOMBRE_MATERIA'],materia['TIPOCREDITO'],materia['NUMCREDITOS'],'',materia['COD_MATERIA_ACAD'],materia['ULTIMO_CAMBIO'])
        lista.append(materia_)
     return lista
-
-
-      
-      
 
